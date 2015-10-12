@@ -1,15 +1,28 @@
-var noop = function() {}
-
-var expect = function() {
+function expect(val) {
   return {
-    to: noop,
+    to: function(checker) {
+      return checker(val);
+    },
     not: {
-      to: noop
+      to: function(checker) {
+        return !checker(val);
+      }
     }
   }
 };
 
-var eq = noop;
-var beGreaterThan = noop;
+function eq(example) {
+  return function eqChecker(val) {
+    return example === val;
+  }
+};
 
-module.exports = { expect, eq, beGreaterThan };
+function beGreaterThan(example) {
+  return function gtChecker(val) {
+    return val > example;
+  }
+}
+
+module.exports = {
+  expect, eq, beGreaterThan
+};
