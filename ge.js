@@ -1,28 +1,31 @@
 function expect(val) {
   return {
-    to: function(checker) {
-      return checker(val);
+    to: function(assert) {
+      return assert(val);
     },
     not: {
-      to: function(checker) {
-        return !checker(val);
+      to: function(assert) {
+        return !assert(val);
       }
     }
   }
 };
 
 function eq(example) {
-  return function eqChecker(val) {
+  return function assertEqual(val) {
     return example === val;
   }
 };
 
 function beGreaterThan(example) {
-  return function gtChecker(val) {
+  return function assertGT(val) {
     return val > example;
   }
-}
+};
+
 
 module.exports = {
-  expect, eq, beGreaterThan
+  expect: expect,
+  eq: eq,
+  beGreaterThan: beGreaterThan
 };
